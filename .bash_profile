@@ -7,8 +7,6 @@ export PYTHONPATH=~/Library/Python/2.7/bin/
 export DEVAPOLLOPATH=~/src/dev_notes/apollo/
 export PATH=$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPATH/bin:$GOROOT/bin:$HOME/bin:$DEVAPOLLOPATH
 export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH # added by Snowflake SnowSQL installer v1.0
-export SG_NPM_TOKEN=15300346-c3db-4fa4-b6f6-03918be4d86e
-export FA_NPM_TOKEN=34643B92-EAF8-4E94-96D9-32DD4DBD4732
 
 # bash things
     #prompt
