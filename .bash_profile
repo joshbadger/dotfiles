@@ -7,6 +7,7 @@ export PYTHONPATH=~/Library/Python/2.7/bin/
 export DEVAPOLLOPATH=~/src/dev_notes/apollo/
 export PATH=$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPATH/bin:$GOROOT/bin:$HOME/bin:$DEVAPOLLOPATH
 export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH # added by Snowflake SnowSQL installer v1.0
+source ~/.bash_secrets # npm tokens, etc
 
 # bash things
     #prompt
@@ -43,12 +44,12 @@ export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH # added by Snowflake 
 # Aliases
     alias ls='ls -G'
     alias avt='java -jar ~/bin/avro-tools-1.8.1.jar'
-    alias syncdev='fswatch -o ~/src/rplabs/ | xargs -n1 -I{} rsync -atvz0 --exclude data_science_dev/ --exclude .git* --del ~/src/rplabs/ ${UTIL}:/home/ubuntu/jbadger/code'
     alias tf='terraform'
 
     # aws
     alias s3='aws --profile eo s3'
-    alias aw='eval $(awsume -s eo)'
+    alias aqaws='eval $(aquaduck aws -p eo)'
+    alias ecr='$(aws ecr get-login --profile eo --region us-east-1 --no-include-email)'
 
     # docker
     alias dc='docker-compose'
@@ -64,8 +65,13 @@ export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH # added by Snowflake 
     # kube
     alias k='kubectl'
     alias kw='${HOME}/bin/kubectl-config.sh'
-    alias kgp='kubectl get po | grep -v "flink\|exec\|driver"'
     alias kc='kubectl config current-context'
+    alias keot='eval $(aquaduck auth kube eo-test -n eo -p eo)'
+    alias keo='eval $(aquaduck auth kube eo-prod -n eo -p eo)'
+    alias kpeonot='kubectl get po | grep eo-notification'
+
+    # Aquaduck
+    alias aq='aquaduck'
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
