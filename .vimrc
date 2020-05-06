@@ -14,9 +14,14 @@
         Plugin 'ruanyl/vim-gh-line'
 		Plugin 'mileszs/ack.vim'
         Plugin 'SirVer/ultisnips'
+        Plugin 'stephpy/vim-yaml'
+        Plugin 'tpope/vim-surround'
+        Plugin 'matchit.zip'
+        "Plugin 'JamshedVesuna/vim-markdown-preview'
     call vundle#end()            " required
     filetype plugin indent on    " required
 "Vundle Stop
+
 
 " general
     let mapleader = ","
@@ -31,9 +36,16 @@
     "set hlsearch     " do highlight searching
     set laststatus=2  " Always display the status line
     set autowrite     " Automatically :write before running commands
-    set wrap!         " don't wrap lines
+    "set wrap!         " don't wrap lines
 
-    "autocmd BufWritePre * :%s/\s\+$//e  "auto strip whitespace on save
+    autocmd BufWritePre * :%s/\s\+$//e  "auto strip whitespace on save
+    nnoremap <leader>c :exe ":silent !chromium-browser %"<CR> "open current file in chro'me
+
+    " wrap long lines in quickfix
+    augroup quickfix
+        autocmd!
+        autocmd FileType qf setlocal wrap
+    augroup END
 
 	" tab navigation
     nnoremap th  :tabfirst<CR>
@@ -60,10 +72,12 @@
     nnoremap <Up> :echoe "Use k"<CR>
     nnoremap <Down> :echoe "Use j"<CR>
 
+" text control
     " copy paste using system clipboard
     vnoremap <leader>c :w !pbcopy<CR><CR>
     noremap <leader>v :r !pbpaste<CR><CR>
 
+    " trim whitespace func
     fun! TrimWhitespace()
         let l:save = winsaveview()
         keeppatterns %s/\s\+$//e
@@ -71,6 +85,7 @@
     endfun
 
     map <leader>w :call TrimWhitespace()<CR>
+
 " ultisnips
     " Trigger configuration
     let g:UltiSnipsExpandTrigger="<tab>"

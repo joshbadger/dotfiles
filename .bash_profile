@@ -1,13 +1,16 @@
-export JAVA_HOME="`/usr/libexec/java_home -v 1.8`"
-export M2_HOME=/usr/local/Cellar/maven/3.5.2/libexec
-export CLASSPATH=/Library/Java/Extensions/
+#export JAVA_HOME="`/usr/libexec/java_home -v 1.8`"
+#export M2_HOME=/usr/local/Cellar/maven/3.5.2/libexec
+#export CLASSPATH=/Library/Java/Extensions/
 export GOPATH=$HOME/go
-export GOROOT=/usr/local/opt/go/libexec
-export PYTHONPATH=~/Library/Python/2.7/bin/
-export DEVAPOLLOPATH=~/src/dev_notes/apollo/
-export PATH=$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPATH/bin:$GOROOT/bin:$HOME/bin:$DEVAPOLLOPATH
-export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH # added by Snowflake SnowSQL installer v1.0
-source ~/.bash_secrets # npm tokens, etc
+export GOROOT=$(brew --prefix golang)/libexec # /usr/local/opt/go/libexec
+#export PYTHONPATH=~/Library/Python/2.7/bin/
+#export DEVAPOLLOPATH=~/src/dev_notes/apollo/
+#export SNOWFLAKEPATH=/Applications/SnowSQL.app/Contents/MacOS # added by Snowflake SnowSQL installer v1.0
+
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+export PATH=$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPATH/bin:$GOROOT/bin:$HOME/bin:$SNOWFLAKEPATH
+
+source ~/.bash_secrets # moar exports (npm tokens, etc)
 
 # bash things
     #prompt
@@ -69,10 +72,13 @@ source ~/.bash_secrets # npm tokens, etc
     alias keot='eval $(aquaduck auth kube eo-test -n eo -p eo)'
     alias keo='eval $(aquaduck auth kube eo-prod -n eo -p eo)'
     alias kpeonot='kubectl get po | grep eo-notification'
+    alias cdev1="ssh -N -p 22 ec2-user@eo-gateway.tst.returnpath.net -L 127.0.0.1:11511:tf-cdev1-dev.ch3aslfv4t7y.us-east-1.rds.amazonaws.com:11521"
+    alias ctst1="ssh -N -p 22 ec2-user@eo-gateway.tst.returnpath.net -L 127.0.0.1:11521:tf-ctst1-test.ch3aslfv4t7y.us-east-1.rds.amazonaws.com:11521"
+    alias cprod1="ssh -N -p 22 ec2-user@eo-gateway.returnpath.net -L 127.0.0.1:21521:tf-cprod1-prod.ch3aslfv4t7y.us-east-1.rds.amazonaws.com:21521"
 
     # Aquaduck
     alias aq='aquaduck'
+    alias aqtest="aquaduck auth ssh -e eo-test"
+    alias aqprod="aquaduck auth ssh -e eo-prod"
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 
