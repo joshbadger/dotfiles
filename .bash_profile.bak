@@ -1,0 +1,55 @@
+export PATH=$PATH:~/Library/Python/2.7/bin/
+
+# git
+source ~/bin/git-completion.sh
+source ~/bin/git-prompt.sh
+
+#prompt
+export PS1='\u@rpco \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export QUBOLE_API_TOKEN=pgqeFwJi58KAGqsNy2CGSfxteqQ8CxzGqmU8kmtRtxHrXeajTVXGLn7HXUWxQVoW
+
+# aws dns
+export EMR=ec2-35-160-164-183.us-west-2.compute.amazonaws.com
+export UTIL=ec2-34-215-67-192.us-west-2.compute.amazonaws.com
+export SFTP=ec2-52-42-155-102.us-west-2.compute.amazonaws.com
+export SFTP2=ec2-34-209-18-10.us-west-2.compute.amazonaws.com
+export SERV=ec2-34-210-241-0.us-west-2.compute.amazonaws.com
+
+export IMP=ec2-52-32-174-68.us-west-2.compute.amazonaws.com
+
+# Aliases
+# alias ls='ls -G'
+alias avt='java -jar ~/bin/avro-tools-1.8.1.jar'
+alias s3='aws s3'
+alias deploy='~/src/dev_notes/deploy.sh'
+alias syncdev='fswatch -o ~/src/rplabs/ | xargs -n1 -I{} rsync -atvz0 --exclude data_science_dev/ --exclude .git* --del ~/src/rplabs/ ${UTIL}:/home/ubuntu/jbadger/code'
+# ssh aliases
+alias emr='ssh ${EMR}'
+alias util='ssh ${UTIL}'
+#alias sftp='ssh ${SFTP}'
+alias sftp2='ssh ${SFTP2}'
+alias imp='ssh ${IMP}'
+
+#colored tab completion
+set colored-stats on
+
+# make hack slackable
+export SLACK_DEVELOPER_MENU=true
+
+complete -C '/usr/local/bin/aws_completer' aws # aws CLI tab completion
+
+shopt -s histappend # always append to history so we preserve bash history between sessions
+HISTSIZE=100000 # embiggen history size
+
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+
+source ~/.bash_functions
+
+# bash completion
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+source ~/.profile

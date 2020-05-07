@@ -1,0 +1,62 @@
+"*":
+  Ensime:
+    sbtExec: "/usr/local/bin/sbt"
+  "autocomplete-plus":
+    strictMatching: true
+  autosave:
+    enabled: true
+  core:
+    customFileTypes:
+      "source.ini": [
+        ".buckconfig"
+        ".hgrc"
+      ]
+      "source.json": [
+        ".arcconfig"
+        "BUCK.autodeps"
+      ]
+      "source.python": [
+        "BUCK"
+      ]
+    disabledPackages: [
+      "nuclide"
+      "autocomplete-css"
+      "autocomplete-atom-api"
+      "autocomplete-html"
+      "autocomplete-snippets"
+      "autocomplete-plus"
+    ]
+    telemetryConsent: "limited"
+  editor:
+    fontSize: 18
+    showIndentGuide: true
+    showInvisibles: true
+    tabLength: 4
+    tabType: "soft"
+  "exception-reporting":
+    userId: "349b6bac-077a-4038-9c75-8b4c39ead4ae"
+  "go-plus":
+    config: {}
+    format: {}
+    lint: {}
+    panel: {}
+    test:
+      coverageDisplayMode: "gutter"
+      timeout: 6000000
+  linter: {}
+  "linter-pylint":
+    disableTimeout: true
+  "linter-python-pep8":
+    pep8DirToExecutable: "/usr/local/bin/"
+  "linter-ui-default":
+    panelHeight: 308
+    showPanel: true
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  welcome:
+    showOnStartup: false
+  whitespace:
+    removeTrailingWhitespace: false
+".protobuf.source":
+  editor:
+    tabLength: 2
