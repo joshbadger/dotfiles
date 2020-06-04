@@ -1,8 +1,26 @@
-  set nocompatible              " be iMproved, required
-  filetype off                  " required
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-"Vundle
-    set rtp+=~/.vim/bundle/Vundle.vim
+"Vundle with self-install
+    let iCanHazVundle=1
+    let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
+    if !filereadable(vundle_readme)
+        echo "Installing Vundle.."
+        echo ""
+        silent !mkdir -p ~/.vim/bundle
+        silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+        let iCanHazVundle=0
+    endif
+    set rtp+=~/.vim/bundle/Vundle.vim/
+    call vundle#rc()
+
+    " let Vundle manage Vundle, required
+    Plugin 'VundleVim/Vundle.vim'
+    if iCanHazVundle == 0
+        echo "Installing Bundles, please ignore key map error messages"
+        echo ""
+        :PluginInstall
+    endif
     call vundle#begin()
         Plugin 'VundleVim/Vundle.vim'
         Plugin 'vim-airline/vim-airline'
@@ -22,7 +40,7 @@
     filetype plugin indent on    " required
 "Vundle Stop
 
-" general
+"General
     let mapleader = ","
     set backspace=2   " Backspace deletes like most programs in insert mode
     set nobackup
@@ -71,7 +89,7 @@
     nnoremap <Up> :echoe "Use k"<CR>
     nnoremap <Down> :echoe "Use j"<CR>
 
-" text control
+"text control
     " copy paste using system clipboard
     vnoremap <leader>c :w !pbcopy<CR><CR>
     noremap <leader>v :r !pbpaste<CR><CR>
@@ -85,18 +103,18 @@
 
     map <leader>w :call TrimWhitespace()<CR>
 
-" ultisnips
+"ultisnips
     " Trigger configuration
     let g:UltiSnipsExpandTrigger="<tab>"
     let g:UltiSnipsJumpForwardTrigger="<tab>"
     let g:UltiSnipsJumpBackwardTrigger="<C-b>"
 
-" silver searcher
+"silver searcher
     if executable('ag')
 		let g:ackprg = 'ag --vimgrep'
 	endif
 
-" vim-go
+"vim-go
     let g:go_fmt_command = "goimports"  " format with goimports instead of gofmt
     let g:go_list_type = "quickfix"     " only use quickfix error lists
     let g:go_def_mode='godef'           " faster than default, guru
@@ -109,25 +127,24 @@
     autocmd FileType go nmap <leader>b  <Plug>(go-build)
     autocmd FileType go nmap <leader>t  <Plug>(go-test)
 
-" Colors
-   set background=dark
-   colorscheme solarized
-   let g:solarized_termcolors=256
-   let g:solarized_termtrans=0
+"colors
+    set background=dark
+    let g:solarized_termcolors=256
+    let g:solarized_termtrans=0
     " solarized options
-   " let g:solarized_visibility = "high"
-   " let g:solarized_contrast = "high"
+    let g:solarized_visibility = "high"
+    let g:solarized_contrast = "high"
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
-  syntax on
-endif
+    " Switch syntax highlighting on, when the terminal has colors
+    " Also switch on highlighting the last used search pattern.
+    if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
+        syntax on
+    endif
 
-" Make it obvious where 80 characters is
-"    set textwidth=80
+    "make it obvious where 80 characters is
+    set textwidth=80
     set colorcolumn=+1
-    highlight ColorColumn ctermbg=010001
+    highlight ColorColumn ctermbg=010002
 
 " Numbers
     set number
@@ -139,7 +156,7 @@ endif
     let g:NERDTreeNodeDelimiter = "\u00a0" "get rid of ^G characters
 
 " Open new split panes to right and bottom, which feels more natural
-"    set splitbelow
+    set splitbelow
     set splitright
 
 " Softtabs, 2 spaces
