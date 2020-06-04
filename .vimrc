@@ -1,7 +1,7 @@
-" Vundle Start
-    set nocompatible              " be iMproved, required
-    filetype off                  " required
+  set nocompatible              " be iMproved, required
+  filetype off                  " required
 
+"Vundle
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
         Plugin 'VundleVim/Vundle.vim'
@@ -9,19 +9,18 @@
         Plugin 'altercation/vim-colors-solarized'
         Plugin 'airblade/vim-gitgutter'
         Plugin 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-        Plugin 'derekwyatt/vim-scala'
+        "Plugin 'derekwyatt/vim-scala'
         Plugin 'scrooloose/nerdtree'
         Plugin 'ruanyl/vim-gh-line'
 		Plugin 'mileszs/ack.vim'
         Plugin 'SirVer/ultisnips'
-        Plugin 'stephpy/vim-yaml'
+        "Plugin 'stephpy/vim-yaml'
         Plugin 'tpope/vim-surround'
         Plugin 'matchit.zip'
         "Plugin 'JamshedVesuna/vim-markdown-preview'
     call vundle#end()            " required
     filetype plugin indent on    " required
 "Vundle Stop
-
 
 " general
     let mapleader = ","
@@ -111,8 +110,13 @@
     autocmd FileType go nmap <leader>t  <Plug>(go-test)
 
 " Colors
-    set background=dark
-    colorscheme solarized
+   set background=dark
+   colorscheme solarized
+   let g:solarized_termcolors=256
+   let g:solarized_termtrans=0
+    " solarized options
+   " let g:solarized_visibility = "high"
+   " let g:solarized_contrast = "high"
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.

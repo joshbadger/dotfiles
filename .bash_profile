@@ -10,8 +10,6 @@ export GOROOT=$(brew --prefix golang)/libexec # /usr/local/opt/go/libexec
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 export PATH=$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPATH/bin:$GOROOT/bin:$HOME/bin:$SNOWFLAKEPATH
 
-source ~/.bash_secrets # moar exports (npm tokens, etc)
-
 # bash things
     #prompt
     export PS1='\u@rpco \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
@@ -34,8 +32,7 @@ source ~/.bash_secrets # moar exports (npm tokens, etc)
     [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
 # kube
-    export KUBECONFIG="${HOME}/.kube/eo-test/config"
-    source ~/bin/kubectl-completion.sh
+    #source ~/bin/kubectl-completion.sh
 
 # git
     source ~/bin/git-completion.sh

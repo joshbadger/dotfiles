@@ -16,7 +16,7 @@ repo-pattern    Any unique identifier for a project name.
 "
     else
         FOUND=0
-        SOURCE_DIRS=(~/src ~/go/src/github.com/ReturnPath)
+        SOURCE_DIRS=(~/src)
         for CHECK_DIR in ${SOURCE_DIRS[@]}; do
             PROJECTS=(`find "$CHECK_DIR" -maxdepth 1 -type d -iname "*$1*"`)
             if [ ${#PROJECTS[@]} -gt 0 ]; then
