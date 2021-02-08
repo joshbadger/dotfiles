@@ -69,10 +69,6 @@ function diff {
     colordiff -u "$@" | less -RF
 }
 
-ackg() {
-  find . -name '${2}' | ack -x -i '${1}'
-}
-
 # kube PDT funcs
 kprod1() {
     kops 1 prod eo
@@ -131,6 +127,23 @@ tunnel() {
         echo $CMD2
         command $CMD2
     fi
+}
 
+aws_login(){
+	saml2aws login --session-duration 43200 --username jbadger@kyruus.com --duo-mfa-option='Duo Push' --skip-prompt --force --role='arn:aws:iam::206670668379:role/scheduling-engineers'
+	# open 'https://kyruus.okta.com/home/amazon_aws/0oac4wn1eFUJ8RivP356/272?fromHome=true'
+    # osascript -e "tell application \"/Applications/Tunnelblick.app\"" -e "connect \"Kyruus VPC\"" -e "end tell"
+}
+
+function kssh () {
+    INSTANCE_ID=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=$1" --query 'Reservations[0].Instances[0].InstanceId' --output text)
+    aws ssm start-session --target $INSTANCE_ID
+}
+
+function svtest() {
+    if [ $# = 1 ]; then
+       TARGET=$1 
+    fi
+    command nosetests "$TARGET"/tests --verbose --with-coverage --cover-branches --cover-package="$TARGET" --cover-erase --logging-level=INFO
 }
 

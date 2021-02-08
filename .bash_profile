@@ -1,22 +1,30 @@
 #export JAVA_HOME="`/usr/libexec/java_home -v 1.8`"
 #export M2_HOME=/usr/local/Cellar/maven/3.5.2/libexec
 #export CLASSPATH=/Library/Java/Extensions/
-export GOPATH=$HOME/go
+export GOPATH=$HOME/go:$HOME/src
 export GOROOT=$(brew --prefix golang)/libexec # /usr/local/opt/go/libexec
-#export PYTHONPATH=~/Library/Python/2.7/bin/
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
+export NOSE_NOCAPTURE=1 # show stdout in nosetest (availability_serverless)
+#export PYTHONPATH=~/Library/Python/2.7/bin/ 
 #export DEVAPOLLOPATH=~/src/dev_notes/apollo/
 #export SNOWFLAKEPATH=/Applications/SnowSQL.app/Contents/MacOS # added by Snowflake SnowSQL installer v1.0
 
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 export PATH=$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPATH/bin:$GOROOT/bin:$HOME/bin:$SNOWFLAKEPATH
 
+
+# Python ENV setup (https://github.com/pyenv/pyenv-virtualenv)
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+# iterm2 enable colors
+
 # bash things
-    #prompt
-    export PS1='\u@rpco \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
-    export GIT_PS1_SHOWDIRTYSTATE=1
-    export GIT_PS1_SHOWUNTRACKEDFILES=1
+    # colors
     export CLICOLOR=1
-    #export LSCOLORS=GxFxCxDxBxegedabagaced
+    export LSCOLORS=ExFxBxDxCxegedabagacad
 
     # history
     shopt -s histappend # always append to history so we preserve bash history between sessions
@@ -38,17 +46,21 @@ export PATH=$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPATH/bin:$GOROOT/bin:$HOME/bin:$S
     source ~/bin/git-completion.sh
     source ~/bin/git-prompt.sh
 
+    # prompt
+    export PS1='\u@kyruus \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    export GIT_PS1_SHOWUNTRACKEDFILES=1
+
 # aws
     complete -C '/usr/local/bin/aws_completer' aws # aws CLI tab completion
 
 # Aliases
+    alias res='exec -l $SHELL'
     alias ls='ls -G'
-    alias avt='java -jar ~/bin/avro-tools-1.8.1.jar'
     alias tf='terraform'
 
     # aws
     alias s3='aws --profile eo s3'
-    alias aqaws='eval $(aquaduck aws -p eo)'
     alias ecr='$(aws ecr get-login --profile eo --region us-east-1 --no-include-email)'
 
     # docker
@@ -56,7 +68,7 @@ export PATH=$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPATH/bin:$GOROOT/bin:$HOME/bin:$S
 
     # git
     alias gitdiff='git diff --ws-error-highlight=new,old'
-    alias 'gdm'='git branch | grep \* | cut -d " " -f2 | xargs -I{} sh -cv "git checkout master; git branch -D {};"'
+    alias 'gdm'='git branch | grep \* | cut -d " " -f2 | xargs -I{} sh -cv "git checkout master; git branch -D {}; git push origin :{}"'
 
     # godzilla
     alias de='dep ensure -v'
@@ -66,16 +78,10 @@ export PATH=$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPATH/bin:$GOROOT/bin:$HOME/bin:$S
     alias k='kubectl'
     alias kw='${HOME}/bin/kubectl-config.sh'
     alias kc='kubectl config current-context'
-    alias keot='eval $(aquaduck auth kube eo-test -n eo -p eo)'
-    alias keo='eval $(aquaduck auth kube eo-prod -n eo -p eo)'
-    alias kpeonot='kubectl get po | grep eo-notification'
-    alias cdev1="ssh -N -p 22 ec2-user@eo-gateway.tst.returnpath.net -L 127.0.0.1:11511:tf-cdev1-dev.ch3aslfv4t7y.us-east-1.rds.amazonaws.com:11521"
-    alias ctst1="ssh -N -p 22 ec2-user@eo-gateway.tst.returnpath.net -L 127.0.0.1:11521:tf-ctst1-test.ch3aslfv4t7y.us-east-1.rds.amazonaws.com:11521"
-    alias cprod1="ssh -N -p 22 ec2-user@eo-gateway.returnpath.net -L 127.0.0.1:21521:tf-cprod1-prod.ch3aslfv4t7y.us-east-1.rds.amazonaws.com:21521"
 
-    # Aquaduck
-    alias aq='aquaduck'
-    alias aqtest="aquaduck auth ssh -e eo-test"
-    alias aqprod="aquaduck auth ssh -e eo-prod"
+    # python
+    alias fl='flake8 --ignore E501'
 
-
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
