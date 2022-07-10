@@ -113,8 +113,8 @@ set path+=**                " recurse
     map <leader>m :bn<CR>
     map <leader>bd :bd<CR>
 
-    " Quick edit nvimrc
-    map <leader>rc :execute "tabnew " . $MYVIMRC<CR>
+    " Quick edit vimrc
+    map <leader>re :execute "tabnew " . $MYVIMRC<CR>
     map <leader>rs :execute "source " . $MYVIMRC<CR>
 
     map <leader>rv :execute "tabnew /Users/jbadger/.vimrc"<CR>
@@ -180,7 +180,7 @@ set path+=**                " recurse
 
     let g:PyFlakeOnWrite = 1
     let g:PyFlakeCheckers = 'flake8,pep8'
-    let g:PyFlakeDisabledMessages = 'E501'
+    let g:PyFlakeDisabledMessages = 'E501,E402'
     let g:PyFlakeSigns = 0
 
     " " F10 to format
