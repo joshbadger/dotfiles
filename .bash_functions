@@ -2,6 +2,17 @@ ackv() {
     command ack -i --ignore-dir=vendor --color "$@" 2> /dev/null
 }
 
+function gcgp() {
+    if [ $# -eq 0 ]; then
+        echo -e "Shortcut to `git checkout <branch_name> && git pull`
+
+Usage: gcgp <branch_name>
+"
+    else
+        git checkout $1 and git pull
+    fi
+}
+
 #
 # Shortcut to cd into the working directory for a web project
 #
@@ -39,24 +50,6 @@ aws-describe() {
 }
 
 
-kops() {
-    if [ $# -lt 3 ]; then
-        echo "usage: kops <cluster_number> <env> <namespace> <role>"
-        echo "       if no role is given, role defaults to the namespace"
-    else
-        ENV=""
-        if [ "${2}" != "prod" ]; then
-            ENV=".tst"
-        fi
-
-        ROLE="${4}"
-        if [ -z "${4}" ]; then
-            ROLE="${3}"
-        fi
-        command eval $(aquaduck auth kube workload${1}.k8s$ENV.returnpath.net --k8s-auth-type kops -n ${3} -p $ROLE)
-    fi
-}
-
 # Remove any entries from SSH known_hosts file
 # that match the specified string.
 sshrm () {
@@ -69,68 +62,9 @@ function diff {
     colordiff -u "$@" | less -RF
 }
 
-# kube PDT funcs
-kprod1() {
-    kops 1 prod eo
-}
 
-gateway() {
-    if [ $# -lt 2 ]; then
-        echo "usage: gateway <env> <namespace> <role>"
-        echo "       if no role is given, role defaults to the namespace"
-    else
-        ENV="prod"
-        HOST=""
-        if [ "${1}" != "prod" ]; then
-            ENV="test"
-            HOST=".tst"
-        fi
-
-        ROLE="${3}"
-        if [ -z "${3}" ]; then
-            ROLE="${2}"
-        fi
-
-        CMD1="aquaduck auth ssh eo-${ENV}"
-        echo $CMD1
-        command $CMD1
-
-        CMD2="ssh ec2-user@eo-gateway${HOST}.returnpath.net"
-        echo $CMD2
-        command $CMD2
-    fi
-
-}
-
-tunnel() {
-    if [ $# -lt 1 ]; then
-        echo "usage: tunnel <env>"
-    else
-        PORT="11521"
-        LB="ctst1"
-        HOST="tst."
-        ENV="test"
-
-
-        if [ "${1}" == "prod" ]; then
-            PORT="21521"
-            LB="cprod1"
-            HOST=""
-            ENV="prod"
-        fi
-
-        CMD1="aquaduck auth ssh eo-${ENV}"
-        echo $CMD1
-        command $CMD1
-
-        CMD2="ssh -N -p 22 ec2-user@eo-gateway.${HOST}returnpath.net -L 127.0.0.1:${PORT}:tf-${LB}-${ENV}.ch3aslfv4t7y.us-east-1.rds.amazonaws.com:${PORT}"
-        echo $CMD2
-        command $CMD2
-    fi
-}
-
-aws_login(){
-	saml2aws login --session-duration 43200 --username jbadger@kyruus.com --duo-mfa-option='Duo Push' --skip-prompt --force --role='arn:aws:iam::206670668379:role/scheduling-engineers'
+aws-login(){
+	saml2aws login --session-duration 43200 --username jbadger --duo-mfa-option='Duo Push' --skip-prompt --force --role='arn:aws:iam::206670668379:role/enterprise-scheduling-engineer'
 	# open 'https://kyruus.okta.com/home/amazon_aws/0oac4wn1eFUJ8RivP356/272?fromHome=true'
     # osascript -e "tell application \"/Applications/Tunnelblick.app\"" -e "connect \"Kyruus VPC\"" -e "end tell"
 }

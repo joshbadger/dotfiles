@@ -37,7 +37,7 @@ set path+=**                " recurse
         Plugin 'VundleVim/Vundle.vim'
         Plugin 'airblade/vim-gitgutter'                         " show per line git status
         Plugin 'andviro/flake8-vim'                             " linter
-        Plugin 'davidhalter/jedi'                               " LSP server for linting, etc
+        " Plugin 'davidhalter/jedi'                               " LSP server for linting, etc
         " Plugin 'dense-analysis/ale'                             " async linter
         " Plugin 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }   " for Golang development
         " Plugin 'JamshedVesuna/vim-markdown-preview'             " markdown preview
@@ -56,8 +56,15 @@ set path+=**                " recurse
         Plugin 'vim-airline/vim-airline'                        " status bar / tab line
         Plugin 'Vimjas/vim-python-pep8-indent'                  " indentz
         Plugin 'Xuyuanp/nerdtree-git-plugin'                    " nerdtree git status
-        " Plugin 'VundleVim/Vundle.vim'
-        " Plugin 'ludovicchabant/vim-gutentags'                   " tag management... we'll see
+        " Plugin 'ludovicchabant/vim-gutentags'                   " tag management
+        Plugin 'vim-test/vim-test'                              " test framework
+        Plugin 'lieryan/vim-jumpsuite'                          " for filtering and jumping around tracebacks after running tests
+        Plugin 'jpalardy/vim-slime'                             " IPython embed for REPL with vim-slime to sling text into the shell.
+                                                                "     IPython has a very good Autocompletion which is based on the actual
+                                                                "     objects being run, which avoids all the problems with static analysis
+       " Plugin 'KangOl/vim-pudb'                                 " debugger -- disabled because it causes https://github.com/KangOl/vim-pudb/issues/6 - needs workaround for loading venv
+       Plugin 'python-mode/python-mode'                         " for refactoring
+
     call vundle#end()            " required
     filetype plugin indent on    " required
 "Vundle Stop
