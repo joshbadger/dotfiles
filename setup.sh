@@ -4,12 +4,14 @@ set -x  # this prints commands to screen
 
 CASKS=(
 	1password
-	brave-browser
-	insomnia
-	karabiner-elements  # for key mapping
+	boom  # system-wide mac EQ
+	brave-browser  # no tracky tracky
+	insomnia  # rest client
+	karabiner-elements  # for key mapping my HHKB function keys
 	menu-meters  # menu bar monitors (cpu, temp, network, etc)
 	pgadmin4
 	slack
+	spectacle  # window mgmt
 	spotify
 	visual-studio-code
 	zoom
