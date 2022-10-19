@@ -1,0 +1,144 @@
+{
+    "workbench.sideBar.location": "left",
+    "vim.leader": ",",
+    "vim.useSystemClipboard": true,
+    // toggle current file tree view
+    "vim.normalModeKeyBindings": [
+        {
+            "before": [
+                "<leader>",
+                "a"
+            ],
+            "commands": [
+                "workbench.view.explorer"
+            ]
+        }
+    ],
+    // make status bar black
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#1A1A1A",
+        "statusBar.noFolderBackground": "#212121",
+        "statusBar.debuggingBackground": "#263238"
+    },
+    // code formatting
+    "python.formatting.provider": "autopep8",
+    "editor.formatOnSave": false,
+    // hide titlebar
+    // "window.titleBarStyle": "native",
+    // "customizeUI.titleBar": "inline",
+    // "customizeUI.activityBar": "wide",
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "files.autoSave": "onWindowChange",
+    "editor.minimap.enabled": false,
+    "files.trimTrailingWhitespace": true,
+    "workbench.tree.indent": 18,
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "vim.argumentObjectClosingDelimiters": [
+        ")",
+        "]",
+        "}"
+    ],
+    "vim.argumentObjectOpeningDelimiters": [
+        "(",
+        "[",
+        "{"
+    ],
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "editor.accessibilitySupport": "off",
+    "workbench.list.automaticKeyboardNavigation": false,
+    // linting
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        "--ignore=E501,E402,F403,E131,W503"
+    ],
+    "python.linting.mypyEnabled": false,
+    "python.linting.mypyArgs": [
+        "--ignore-missing-imports",
+        "--follow-imports=silent",
+        "--show-column-numbers",
+        "--strict"
+    ],
+    "yaml.customTags": [
+        "!And",
+        "!And sequence",
+        "!If",
+        "!If sequence",
+        "!Not",
+        "!Not sequence",
+        "!Equals",
+        "!Equals sequence",
+        "!Or",
+        "!Or sequence",
+        "!FindInMap",
+        "!FindInMap sequence",
+        "!Base64",
+        "!Join",
+        "!Join sequence",
+        "!Cidr",
+        "!Ref",
+        "!Sub",
+        "!Sub sequence",
+        "!GetAtt",
+        "!GetAZs",
+        "!ImportValue",
+        "!ImportValue sequence",
+        "!Select",
+        "!Select sequence",
+        "!Split",
+        "!Split sequence"
+    ],
+    "yaml.validate": false,
+    "yaml.format.enable": false,
+    "cfnLint.path": "cfn-lint",
+    "workbench.startupEditor": "welcomePage",
+    "python.languageServer": "Pylance",
+    "redhat.telemetry.enabled": false,
+    "editor.cursorStyle": "line",
+    "editor.insertSpaces": false,
+    "editor.lineNumbers": "on",
+    "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+    "editor.wordWrap": "off",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "yaml.schemas": {
+        "file:///Users/jbadger/.vscode/extensions/atlassian.atlascode-2.10.12/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    },
+    "atlascode.jira.jqlList": [
+        {
+            "id": "1f65e2cd-f478-495b-88b3-af43c564c85a",
+            "enabled": true,
+            "name": "My kyruus Issues",
+            "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
+            "siteId": "7e5caaef-424e-42d5-835a-3f12a3ed7c88",
+            "monitor": true
+        }
+    ],
+    "atlascode.jira.lastCreateSiteAndProject": {
+        "siteId": "7e5caaef-424e-42d5-835a-3f12a3ed7c88",
+        "projectKey": "KENG"
+    },
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "[yaml]": {
+        "editor.insertSpaces": false,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "none",
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        }
+    },
+    "window.zoomLevel": 1
+}
