@@ -3,7 +3,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+#eval "$(pyenv virtualenv-init -)"
 
 
 #export GOPATH=$HOME/go:$HOME/src
@@ -88,6 +88,7 @@ alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
     alias kc='kubectl config current-context'
 
     # python
+    alias python='python3'
     alias fl='flake8 --ignore E501'
     alias pa='pyenv acticvate'
     alias spot='spotify-terminal.py -u joshuabadger'
@@ -105,3 +106,10 @@ export NVM_DIR="/Users/jbadger/.nvm"
 
  # Set PATH, MANPATH, etc., for Homebrew.
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# for python 3.7.x on M1 macs
+export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
+
+# Makefile autocomplete
+complete -W "\`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' ?akefile | sed 's/[^a-zA-Z0-9_.-]*$//'\`" make

@@ -22,12 +22,16 @@ CASKS=(
 	spectacle  # window mgmt
 	spotify
 	visual-studio-code
+    postgresql@14
 )
 
 NOT_CASKS=(
     pyenv
     pyenv-virtualenv
     colordiff
+    awscli
+    jq
+    wget
 )
 
 echo "Installing all of the things via 'brew install --cask <thing>'"
