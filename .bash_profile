@@ -1,8 +1,8 @@
 # Python ENV setup (https://github.com/pyenv/pyenv-virtualenv)
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
+#eval "$(pyenv init --path)"
+#eval "$(pyenv init -)"
 #eval "$(pyenv virtualenv-init -)"
 
 
@@ -17,7 +17,7 @@ export PATH=/usr/local/opt/openssl@1.1/bin:$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPA
 PATH=$PATH:/Users/jbadger/src/ents/scripts
 
 
-alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+#alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
 
 # iterm2 enable colors
 
@@ -47,7 +47,7 @@ alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
     source ~/bin/git-prompt.sh
 
     # prompt
-    export PS1='\u@kyruus \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
+    export PS1='\u@differentkind \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
     export GIT_PS1_SHOWDIRTYSTATE=1
     export GIT_PS1_SHOWUNTRACKEDFILES=1
 
@@ -90,7 +90,7 @@ alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
     # python
     alias python='python3'
     alias fl='flake8 --ignore E501'
-    alias pa='pyenv acticvate'
+    alias pa='pyenv activate'
     alias spot='spotify-terminal.py -u joshuabadger'
     alias remdeps="pip freeze | grep -v -f requirements.txt - | grep -v '^#' | grep -v '^-e ' | xargs pip uninstall -y"
     alias installdeps='pip install -r requirements.txt -r requirements-test.txt'

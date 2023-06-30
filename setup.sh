@@ -2,7 +2,7 @@
 
 # install brew
 export HOMEBREW_INSTALL_FROM_API=1
-eval "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # TODO: install xcode command line tools
@@ -14,7 +14,7 @@ CASKS=(
 	boom  # system-wide mac EQ
 	brave-browser  # no tracky tracky
 	insomnia  # rest client
-    iterm2
+  iterm2
 	karabiner-elements  # for key mapping my HHKB function keys
 	menumeters  # menu bar monitors (cpu, temp, network, etc)
 	pgadmin4
@@ -22,7 +22,7 @@ CASKS=(
 	spectacle  # window mgmt
 	spotify
 	visual-studio-code
-    postgresql@14
+  postgresql@14
 )
 
 NOT_CASKS=(
@@ -58,5 +58,10 @@ ln -s ~/src/dotfiles/.vimrc ~
 ln -s ~/src/dotfiles/.bash_profile ~
 ln -s ~/src/dotfiles/.bash_functions ~
 ln -s ~/src/dotfiles/bin ~  # for git completion and prompt
+ln -s ~/src/dotfiles/keybindings.json ~
+ln -s ~/src/dotfiles/settings.json ~
+
+# vscode enable press and hold for key repeat
+eval "defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false"
 
 source ~/.bash_profile

@@ -1,15 +1,42 @@
-ackv() {
+function ssm() {
+    if [ $# -eq 0 ]; then
+        echo -e "Shortcut to 'aws ssm get-parameters-by-path --path / | jq '.Parameters[] | select(.Name | contains(\"<pattern>\")) | {Name}[]'
+
+Usage: ssm <flag> | <pattern>
+Flags: [-a, --all] retrieves all ssm parameters. note: must be used without specifying a pattern
+"
+    else
+        PATTERN="$1"
+        if [ "$1" == "--all" ] || [ "$1" == "-a" ]; then
+            PATTERN=''
+        fi
+        aws ssm get-parameters-by-path --path / | jq --arg pattern "$PATTERN" '.Parameters[] | select(.Name | contains($pattern)) | {Name}[]'
+    fi
+}
+        
+function ssm-copy() {
+    if [ $# -eq 0 ]; then
+        echo -e "Shortcut to 'aws ssm get-parameter --name <parameter_name> --with-decryption --output text --query Parameter.Value | pbcopy'
+
+Usage: ssm-copy <parameter_name>
+"
+    else
+        aws ssm get-parameter --name "$1" --with-decryption --output text --query Parameter.Value | tr -d "\n" | pbcopy
+    fi
+}
+
+function ackv() {
     command ack -i --ignore-dir=vendor --color "$@" 2> /dev/null
 }
 
 function gcgp() {
     if [ $# -eq 0 ]; then
-        echo -e "Shortcut to `git checkout <branch_name> && git pull`
+        echo -e "Shortcut to 'git checkout <branch_name> && git pull'
 
 Usage: gcgp <branch_name>
 "
     else
-        git checkout $1 and git pull
+        git checkout $1 && git pull
     fi
 }
 
@@ -81,3 +108,15 @@ function svtest() {
     command nosetests "$TARGET"/tests --verbose --with-coverage --cover-branches --cover-package="$TARGET" --cover-erase --logging-level=INFO
 }
 
+function creds() {
+  CREDS=command aws sts get-session-token $1
+  export AWS_ACCESS_KEY_ID=$(echo $CREDS | jq -r '.Credentials.AccessKeyId');
+  export AWS_SECRET_ACCESS_KEY=$(echo $CREDS | jq -r '.Credentials.SecretAccessKey');
+  export AWS_SESSION_TOKEN=$(echo $CREDS | jq -r '.Credentials.SessionToken');
+  CREDS=$(aws sts assume-role --role-session-name dk --role-arn arn:aws:iam::025709795712:role/AccountAdmin --duration-seconds 3600);
+  echo '\n\n';
+  echo AWS_ACCESS_KEY_ID=\"$(echo $CREDS | jq -r '.Credentials.AccessKeyId')\";
+  echo AWS_SECRET_ACCESS_KEY=\"$(echo $CREDS | jq -r '.Credentials.SecretAccessKey')\";
+  echo AWS_SESSION_TOKEN=\"$(echo $CREDS | jq -r '.Credentials.SessionToken')\";
+  echo '\n\n';
+}
