@@ -47,7 +47,7 @@ PATH=$PATH:/Users/jbadger/src/ents/scripts
     source ~/bin/git-prompt.sh
 
     # prompt
-    export PS1='\u@differentkind \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
+    export PS1='\u@janus \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
     export GIT_PS1_SHOWDIRTYSTATE=1
     export GIT_PS1_SHOWUNTRACKEDFILES=1
 
@@ -113,3 +113,18 @@ export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
 
 # Makefile autocomplete
 complete -W "\`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' ?akefile | sed 's/[^a-zA-Z0-9_.-]*$//'\`" make
+
+#AWSume alias to source the AWSume script
+alias awsume="source \$(pyenv which awsume)"
+
+#Auto-Complete function for AWSume
+_awsume() {
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts=$(awsume-autocomplete)
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    return 0
+}
+complete -F _awsume awsume
