@@ -10,30 +10,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # set -x  # this prints commands to screen
 
-CASKS=(
-	1password
-	boom  # system-wide mac EQ
-	brave-browser  # no tracky tracky
-	insomnia  # rest client
-	iterm2
-      # karabiner-elements  # for key mapping my HHKB function keys
-	menumeters  # menu bar monitors (cpu, temp, network, etc)
-      # pgadmin4
-	slack
-	spectacle  # window mgmt
-	spotify
-	visual-studio-code
-      # postgresql@14
-)
-
-NOT_CASKS=(
-    pyenv
-    pyenv-virtualenv
-    colordiff
-    awscli
-    jq
-    wget
-)
 
 echo "Installing all of the things via 'brew install --cask <thing>'"
 

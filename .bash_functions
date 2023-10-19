@@ -108,15 +108,30 @@ function svtest() {
     command nosetests "$TARGET"/tests --verbose --with-coverage --cover-branches --cover-package="$TARGET" --cover-erase --logging-level=INFO
 }
 
-function creds() {
-  CREDS=command aws sts get-session-token $1
-  export AWS_ACCESS_KEY_ID=$(echo $CREDS | jq -r '.Credentials.AccessKeyId');
-  export AWS_SECRET_ACCESS_KEY=$(echo $CREDS | jq -r '.Credentials.SecretAccessKey');
-  export AWS_SESSION_TOKEN=$(echo $CREDS | jq -r '.Credentials.SessionToken');
-  CREDS=$(aws sts assume-role --role-session-name dk --role-arn arn:aws:iam::025709795712:role/AccountAdmin --duration-seconds 3600);
-  echo '\n\n';
-  echo AWS_ACCESS_KEY_ID=\"$(echo $CREDS | jq -r '.Credentials.AccessKeyId')\";
-  echo AWS_SECRET_ACCESS_KEY=\"$(echo $CREDS | jq -r '.Credentials.SecretAccessKey')\";
-  echo AWS_SESSION_TOKEN=\"$(echo $CREDS | jq -r '.Credentials.SessionToken')\";
-  echo '\n\n';
+function asm() {
+    if [ -z "$1" ]; then
+            echo "Please provide an environment as an argument"
+    elif [ "$1" = "dev" ]; then
+            otp=$(op item get "DEV janus AWS" --otp)
+            awsume dev --mfa-token=$otp ${@:2}
+    elif [ "$1" = "app" ]; then
+            otp=$(op item get "APP janus AWS" --otp)
+            awsume app --mfa-token=$otp ${@:2}
+    else
+            echo "Unknown Argument: please provide 'app' or 'dev'"
+    fi
+}
+
+function chaf() {
+    if [ -z "$1" ]; then
+            echo "Please provide an environment as an argument"
+            echo "  app"
+            echo "  dev"
+            exit
+    elif [ "$1" = "dev" ] || [ "$1" = "app" ]; then
+            awsume $1; ./airflow-change-env.sh;
+    else
+            echo "Unknown Argument: please provide 'app' or 'dev'"
+            exit
+    fi
 }
