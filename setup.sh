@@ -11,19 +11,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # set -x  # this prints commands to screen
 
 
-echo "Installing all of the things via 'brew install --cask <thing>'"
-
-for i in "${CASKS[@]}"; do
-  echo ""
-  echo "Installing $i"
-  brew install --cask "$i" || true
-done
-
-for i in "${NOT_CASKS[@]}"; do
-  echo ""
-  echo "Installing $i"
-  brew install "$i" || true
-done
+echo "Brew installing all of the things"
+brew bundle install
 
 echo "setting up dotfiles and $HOME/src dirs"
 
@@ -33,6 +22,7 @@ else
   mkdir $HOME/src
 fi
 
+# use https here since we haven't setup git creds yet
 if [-d "$HOME/src/dotfiles"]; then
   echo "dotfiles have already been cloned"
 else
