@@ -105,7 +105,7 @@
     "editor.wordWrap": "off",
     "editor.multiCursorModifier": "ctrlCmd",
     "yaml.schemas": {
-        "file:///Users/jbadger/.vscode/extensions/atlassian.atlascode-2.10.12/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+        "file:///Users/josh.badger/.vscode/extensions/atlassian.atlascode-3.0.10/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
     },
     "atlascode.jira.jqlList": [
         {
@@ -140,5 +140,8 @@
             "strings": true
         }
     },
-    "window.zoomLevel": 1
+    "window.zoomLevel": 1,
+    "databricks.clusters.onlyShowAccessibleClusters": true,
+    "python.analysis.extraPaths": [],
+    "liveshare.accessibility.soundsEnabled": false
 }

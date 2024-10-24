@@ -37,13 +37,14 @@ set path+=**                " recurse
         Plugin 'VundleVim/Vundle.vim'
         Plugin 'airblade/vim-gitgutter'                         " show per line git status
         Plugin 'andviro/flake8-vim'                             " linter
+        Plugin 'altercation/vim-colors-solarized'
         " Plugin 'davidhalter/jedi'                               " LSP server for linting, etc
         " Plugin 'dense-analysis/ale'                             " async linter
         " Plugin 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }   " for Golang development
         " Plugin 'JamshedVesuna/vim-markdown-preview'             " markdown preview
         " Plugin 'jeetsukumaran/vim-pythonsense'                  " python specific text
         " Plugin 'jiangmiao/auto-pairs'                           " autoclose parens + quotes
-        Plugin 'joshdick/onedark.vim'                           " atom colors, yay
+        " Plugin 'joshdick/onedark.vim'                           " atom colors, yay
         " Plugin 'junegunn/fzf.vim'                               " fuzzy finder  ******** DOESNT WORK AS IS
 		" Plugin 'mileszs/ack.vim'                                " easy acking in vim
         " Plugin 'neoclide/coc.nvim', {'branch': 'release'}       "
@@ -208,7 +209,7 @@ set path+=**                " recurse
 
 "colors
     syntax on
-    colorscheme onedark
+    " colorscheme onedark
 
     "make it obvious where 80 characters is
     set textwidth=200

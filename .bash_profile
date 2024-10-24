@@ -6,13 +6,9 @@ export PATH=/usr/local/opt/openssl@1.1/bin:$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPA
  # Set PATH, MANPATH, etc., for Homebrew.
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Python ENV setup (https://github.com/pyenv/pyenv-virtualenv)
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 # bash things
     # colors
@@ -28,7 +24,7 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 
     # bash completion
     [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-    
+
     # set -o vi
 
 # kube
@@ -39,9 +35,17 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     source ~/bin/git-prompt.sh
 
 # prompt
-    export PS1='\u@janus \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
+    # end forces prompt to start at the bottom
+    end=$(tput cup 9999 0)
+    export PS1='${end} \u@ibotta \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
     export GIT_PS1_SHOWDIRTYSTATE=1
     export GIT_PS1_SHOWUNTRACKEDFILES=1
+
+    # fix `clear` to keep the cursor on the bottom
+    __prompt_to_bottom_line() {
+        tput cup $LINES
+    }
+    alias clear='clear && __prompt_to_bottom_line'
 
 # aws
     complete -C '/usr/local/bin/aws_completer' aws # aws CLI tab completion
@@ -53,19 +57,19 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     # alias tf='terraform'
     alias flushcache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
     alias spot='spotify-terminal.py -u joshuabadger'
-    
+
     # rc related
     alias rc='vim ~/.bash_profile'
     alias sourcerc='source ~/.bash_profile'
     alias vimrc='vim ~/.vimrc'
-    alias zrc='vim ~/.zshrc'
-    alias zenv='vim ~/.zshenv'
+    # alias zrc='vim ~/.zshrc'
+    # alias zenv='vim ~/.zshenv'
     alias funcs='vim ~/.bash_functions'
 
     # aws
     # alias ecr='$(aws ecr get-login --profile eo --region us-east-1 --no-include-email)'
     # alias awsl="aws --profile local --endpoint-url='http://localhost:4566'"
-    alias awsume="source \$(pyenv which awsume)" # AWSume alias to source the AWSume script
+    # alias awsume="source \$(pyenv which awsume)" # AWSume alias to source the AWSume script
 
     # docker
     alias dc='docker-compose'
@@ -75,29 +79,19 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     alias gitdiff='git diff --ws-error-highlight=new,old'
     alias gdm='git branch | grep \* | cut -d " " -f2 | xargs -I{} sh -cv "git checkout master; git branch -D {}; git push origin :{}"'
     alias gpm='git pull origin master:master'
+    alias fff='git push -u origin HEAD'
 
     # kube
     # alias k='kubectl'
     # alias kw='${HOME}/bin/kubectl-config.sh'
     # alias kc='kubectl config current-context'
 
-    # python
-    # alias python='python3'
-    # alias fl='flake8 --ignore E501'
-    # alias pa='pyenv activate'
     # alias remdeps="pip freeze | grep -v -f requirements.txt - | grep -v '^#' | grep -v '^-e ' | xargs pip uninstall -y"
-    # alias installdeps='pip install -r requirements.txt -r requirements-test.txt'
-    # alias redeps='remdeps && installdeps'
-    
+
     # this needs to be after aliases
     source ~/.bash_functions
 
-
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# for python 3.7.x on M1 macs
-# export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
-# export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
 
 # Makefile autocomplete
 complete -W "\`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' ?akefile | sed 's/[^a-zA-Z0-9_.-]*$//'\`" make
