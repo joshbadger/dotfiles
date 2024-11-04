@@ -142,6 +142,9 @@
     },
     "window.zoomLevel": 1,
     "databricks.clusters.onlyShowAccessibleClusters": true,
-    "python.analysis.extraPaths": [],
-    "liveshare.accessibility.soundsEnabled": false
+    "python.analysis.extraPaths": [
+        "src"
+    ],
+    "liveshare.accessibility.soundsEnabled": false,
+    "database-client.autoSync": true
 }
