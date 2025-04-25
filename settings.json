@@ -21,6 +21,7 @@
         "statusBar.debuggingBackground": "#263238"
     },
     // code formatting
+
     "python.formatting.provider": "autopep8",
     "editor.formatOnSave": false,
     // hide titlebar
@@ -29,9 +30,11 @@
     // "customizeUI.activityBar": "wide",
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
-    "files.autoSave": "onWindowChange",
-    "editor.minimap.enabled": false,
+    // "files.autoSave": "onWindowChange",
+    "files.autoSave": "onFocusChange",
+    // combined with the above, this is what trims trailing whitespace on any file you open
     "files.trimTrailingWhitespace": true,
+    "editor.minimap.enabled": false,
     "workbench.tree.indent": 18,
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter-notebook"
@@ -51,18 +54,10 @@
     "editor.accessibilitySupport": "off",
     "workbench.list.automaticKeyboardNavigation": false,
     // linting
-    "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": [
-        "--ignore=E501,E402,F403,E131,W503"
+    "flake8.args": [
+    "--ignore=E501,E402,F403,E131,W503"
     ],
-    "python.linting.mypyEnabled": false,
-    "python.linting.mypyArgs": [
-        "--ignore-missing-imports",
-        "--follow-imports=silent",
-        "--show-column-numbers",
-        "--strict"
-    ],
+
     "yaml.customTags": [
         "!And",
         "!And sequence",
@@ -95,7 +90,7 @@
     "yaml.validate": false,
     "yaml.format.enable": false,
     "cfnLint.path": "cfn-lint",
-    "workbench.startupEditor": "welcomePage",
+    "workbench.startupEditor": "none",
     "python.languageServer": "Pylance",
     "redhat.telemetry.enabled": false,
     "editor.cursorStyle": "line",
@@ -104,23 +99,6 @@
     "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
     "editor.wordWrap": "off",
     "editor.multiCursorModifier": "ctrlCmd",
-    "yaml.schemas": {
-        "file:///Users/josh.badger/.vscode/extensions/atlassian.atlascode-3.0.10/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
-    },
-    "atlascode.jira.jqlList": [
-        {
-            "id": "1f65e2cd-f478-495b-88b3-af43c564c85a",
-            "enabled": true,
-            "name": "My kyruus Issues",
-            "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
-            "siteId": "7e5caaef-424e-42d5-835a-3f12a3ed7c88",
-            "monitor": true
-        }
-    ],
-    "atlascode.jira.lastCreateSiteAndProject": {
-        "siteId": "7e5caaef-424e-42d5-835a-3f12a3ed7c88",
-        "projectKey": "KENG"
-    },
     "notebook.cellToolbarLocation": {
         "default": "right",
         "jupyter-notebook": "left"
@@ -132,7 +110,7 @@
     "security.workspace.trust.untrustedFiles": "open",
     "[yaml]": {
         "editor.insertSpaces": false,
-        "editor.tabSize": 2,
+        "editor.tabSize": 4,
         "editor.autoIndent": "none",
         "editor.quickSuggestions": {
             "other": true,
@@ -140,11 +118,28 @@
             "strings": true
         }
     },
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 2,
     "databricks.clusters.onlyShowAccessibleClusters": true,
     "python.analysis.extraPaths": [
         "src"
     ],
-    "liveshare.accessibility.soundsEnabled": false,
-    "database-client.autoSync": true
+    "settingsSync.ignoredSettings": [
+        "-window.zoomLevel"
+    ],
+    "editor.renderWhitespace": "all",
+    // "files.saveConflictResolution": "overwriteFileOnDisk",
+    "prettier.singleQuote": true,
+    "files.watcherExclude": {
+        "**/.bloop": true,
+        "**/.metals": true,
+        "**/.ammonite": true
+    },
+    "github.copilot.advanced": {
+        "authPermissions": "minimal"
+    },
+    "window.restoreWindows": "none",
+    "workbench.editor.restoreViewState": false,
+    "terminal.integrated.persistentSessionScrollback": 100000,
+    "workbench.localHistory.enabled": false,
+    "editor.experimental.preferTreeSitter.regex": true
 }

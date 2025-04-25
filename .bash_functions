@@ -135,3 +135,19 @@ function chaf() {
             exit
     fi
 }
+
+function mwaa() {
+    cd data-engineering-mwaa-shared-resources/aws-mwaa-local-runner/$1
+}
+
+# run this from the version directory (i.e. .../2.6.3
+function rebuild {
+    if [ "$1" == "-d" ]; then
+        colima delete
+    fi
+    
+    version=${PWD##*/}
+    cd ..
+    source build.sh $version
+    ./mwaa-local-env start sso
+}

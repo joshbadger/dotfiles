@@ -18,6 +18,8 @@ eval "$(pyenv init -)"
     # history
     shopt -s histappend # always append to history so we preserve bash history between sessions
     HISTSIZE=10000000 # embiggen history size
+    # commands prepended with a space don't get captured
+    HISTCONTROL=ignorespace
 
     #colored tab completion
     set colored-stats on
@@ -49,22 +51,111 @@ eval "$(pyenv init -)"
     source ~/bin/git-completion.sh
     source ~/bin/git-prompt.sh
 
-# prompt
+# old prompt
     # old prompt for reference
+    # export PS1='${end} \u@ibotta \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
+    #
+    # export GIT_PS1_SHOWDIRTYSTATE=1
+    # export GIT_PS1_SHOWUNTRACKEDFILES=1
 
-    # end forces prompt to start at the bottom
-    end=$(tput cup 9999 0)
-    export PS1='${end} \u@ibotta \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
-    export PS1='${end} jb@ibotta $(basename $(dirname $PWD))/$(basename $PWD) $(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
+    # # end forces prompt to start at the bottom
+    # end=$(tput cup 9999 0)
+    # blue='\[\e[94m\]'
+    # red='\[\e[39m\]'
+    # export PS1='${end} jb@ibotta $(basename $(dirname $PWD))/$(basename $PWD) $(__git_ps1)\$ '
 
-    export GIT_PS1_SHOWDIRTYSTATE=1
-    export GIT_PS1_SHOWUNTRACKEDFILES=1
+    #
+ 
+# Set the prompt #
+#
 
-    # fix `clear` to keep the cursor on the bottom
-    __prompt_to_bottom_line() {
-        tput cup $LINES
-    }
-    alias clear='clear && __prompt_to_bottom_line'
+# Select git info displayed, see /usr/share/git/completion/git-prompt.sh for more
+export GIT_PS1_SHOWDIRTYSTATE=1           # '*'=unstaged, '+'=staged
+export GIT_PS1_SHOWSTASHSTATE=0           # '$'=stashed
+export GIT_PS1_SHOWUNTRACKEDFILES=1       # '%'=untracked
+# export GIT_PS1_SHOWUPSTREAM="verbose"     # 'u='=no difference, 'u+1'=ahead by 1 commit
+export GIT_PS1_STATESEPARATOR=''          # No space between branch and index status
+export GIT_PS1_DESCRIBE_STYLE="describe"  # detached HEAD style:
+#  contains      relative to newer annotated tag (v1.6.3.2~35)
+#  branch        relative to newer tag or branch (master~4)
+#  describe      relative to older annotated tag (v1.6.3.1-13-gdd42c2f)
+#  default       exactly eatching tag
+
+# Check if we support colours
+__colour_enabled() {
+    local -i colors=$(tput colors 2>/dev/null)
+    [[ $? -eq 0 ]] && [[ $colors -gt 2 ]]
+}
+unset __colourise_prompt && __colour_enabled && __colourise_prompt=1
+
+__set_bash_prompt()
+{
+    local exit="$?" # Save the exit status of the last command
+
+    # PS1 is made from $PreGitPS1 + <git-status> + $PostGitPS1
+    local PreGitPS1="${debian_chroot:+($debian_chroot)}"
+    local PostGitPS1=""
+
+    if [[ $__colourise_prompt ]]; then
+        export GIT_PS1_SHOWCOLORHINTS=1
+
+        # Wrap the colour codes between \[ and \], so that
+        # bash counts the correct number of characters for line wrapping:
+        local Red='\[\e[0;31m\]'; local BRed='\[\e[1;31m\]'
+        local Gre='\[\e[0;32m\]'; local BGre='\[\e[1;32m\]'
+        local Yel='\[\e[0;33m\]'; local BYel='\[\e[1;33m\]'
+        local Blu='\[\e[0;34m\]'; local BBlu='\[\e[1;34m\]'
+        local Mag='\[\e[0;35m\]'; local BMag='\[\e[1;35m\]'
+        local Cya='\[\e[0;36m\]'; local BCya='\[\e[1;36m\]'
+        local Whi='\[\e[0;37m\]'; local BWhi='\[\e[1;37m\]'
+        local None='\[\e[0m\]' # Return to default colour
+
+        # No username and bright colour if root
+        if [[ ${EUID} == 0 ]]; then
+            PreGitPS1+="$BRed\h "
+        else
+            PreGitPS1+="$Red\u@ibotta$None:"
+        fi
+
+        PreGitPS1+="$Blu\W$None"
+    else # No colour
+        # Sets prompt like: ravi@boxy:~/prj/sample_app
+        unset GIT_PS1_SHOWCOLORHINTS
+        PreGitPS1="${debian_chroot:+($debian_chroot)}\u@\h:\w"
+    fi
+
+    # Now build the part after git's status
+
+    # Highlight non-standard exit codes
+    if [[ $exit != 0 ]]; then
+        PostGitPS1="$Red[$exit]"
+    fi
+
+    # Change colour of prompt if root
+    if [[ ${EUID} == 0 ]]; then
+        PostGitPS1+="$BRed"'\$ '"$None"
+    else
+        PostGitPS1+="$Mag"'\$ '"$None"
+    fi
+
+    # Set PS1 from $PreGitPS1 + <git-status> + $PostGitPS1
+    __git_ps1 "$PreGitPS1" "$PostGitPS1" '(%s)'
+
+    # echo '$PS1='"$PS1" # debug
+    # defaut Linux Mint 17.2 user prompt:
+    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[00m\] $(__git_ps1 "(%s)") \$ '
+}
+
+# This tells bash to reinterpret PS1 after every command, which we
+# need because __git_ps1 will return different text and colors
+PROMPT_COMMAND=__set_bash_prompt
+
+
+# fix `clear` to keep the cursor on the bottom
+__prompt_to_bottom_line() {
+    tput cup $LINES
+}
+alias clear='clear && __prompt_to_bottom_line'
 
 # aws
     export SAML2AWS_SESSION_DURATION=3600
@@ -72,8 +163,16 @@ eval "$(pyenv init -)"
     export AWS_DEFAULT_REGION=us-east-1
     export AWS_REGION=$AWS_DEFAULT_REGION
     alias sam="saml2aws login --skip-prompt --session-duration=43200"
-    alias aws="saml2aws exec --exec-profile=ae -- aws"
-    complete -C '/usr/local/bin/aws_completer' aws # aws CLI tab completion
+    #alias aws="saml2aws exec --exec-profile=ae -- aws"
+    complete -C '/opt/homebrew/bin/aws_completer' aws # aws CLI tab completion
+
+    # granted/assume
+    alias assume=". assume"
+    export GRANTED_ALIAS_CONFIGURED="true"
+
+    # Local Runner Start
+    alias lrs="./mwaa-local-env start sso"
+
 
 # Aliases
     # bash
@@ -105,6 +204,10 @@ eval "$(pyenv init -)"
     alias gau='git add -u'
     alias ga='git add'
     alias gcm='git commit -m'
+    alias gp='git pull'
+    alias ggig='vim ~/.gitignore'
+
+    alias pc='pre-commit run'
 
 
     # kube
@@ -114,6 +217,7 @@ eval "$(pyenv init -)"
 
     alias remdeps="pip freeze | grep -v -f requirements.txt - | grep -v '^#' | grep -v '^-e ' | xargs pip uninstall -y"
 
+    alias db="databricks"
     # this needs to be after aliases
     source ~/.bash_functions
 
@@ -137,4 +241,23 @@ export PYTHONPATH="$PYTHONPATH:$HOME/src/*"
 export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-export POETRY_PYPI_TOKEN_IBOTTA_PYPI=$(op item get tthr7u535u7ob6jq4vouqh2u6a --reveal --fields token)
+# poetry 
+# 1password
+export POETRY_HTTP_BASIC_IBOTTA_PYPI_USERNAME=josh.badger
+export POETRY_HTTP_BASIC_IBOTTA_PYPI_PASSWORD=$(op item get tthr7u535u7ob6jq4vouqh2u6a --reveal --fields token)
+
+# bitwarden
+#BW_JFROG_ITEM_ID=5e7d5baf-defa-4cf0-99ba-b266015da5c1
+#export BW_SESSION=$(bw unlock --raw)
+#export POETRY_HTTP_BASIC_IBOTTA_PYPI_USERNAME=josh.badger
+#export POETRY_HTTP_BASIC_IBOTTA_PYPI_PASSWORD=$(bw get password $BW_JFROG_ITEM_ID)
+#bw lock
+
+export PKG_CONFIG_PATH="$(brew --prefix)/opt/mysql-client/lib/pkgconfig"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
+
+
