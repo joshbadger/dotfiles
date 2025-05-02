@@ -37,12 +37,14 @@ echo "  bash_profile"
 echo "  bash_functions"
 echo "  git completion"
 echo "  prompt"
-echo "  vscode settings + keybindings"
+echo "  ackrc"
+# echo "  vscode settings + keybindings"
 
 cd
 ln -s $HOME/SRC/dotfiles/.vimrc $HOME
 ln -s $HOME/src/dotfiles/.bash_profile $HOME
 ln -s $HOME/src/dotfiles/.bash_functions $HOME
+ln -s $HOME/src/dotfiles/.ackrc $HOME
 ln -s $HOME/src/dotfiles/bin $HOME  # for git completion and prompt
 
 # these are for vscode, but i think unneeded if you turn on sync in the app
