@@ -30,8 +30,6 @@
     // "customizeUI.activityBar": "wide",
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
-    // "files.autoSave": "onWindowChange",
-    "files.autoSave": "onFocusChange",
     // combined with the above, this is what trims trailing whitespace on any file you open
     "files.trimTrailingWhitespace": true,
     "editor.minimap.enabled": false,
@@ -87,8 +85,7 @@
         "!Split",
         "!Split sequence"
     ],
-    "yaml.validate": false,
-    "yaml.format.enable": false,
+    // "yaml.validate": false,
     "cfnLint.path": "cfn-lint",
     "workbench.startupEditor": "none",
     "python.languageServer": "Pylance",
@@ -108,16 +105,17 @@
         "**/*.pyc": true
     },
     "security.workspace.trust.untrustedFiles": "open",
-    "[yaml]": {
-        "editor.insertSpaces": false,
-        "editor.tabSize": 4,
-        "editor.autoIndent": "none",
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": false,
-            "strings": true
-        }
-    },
+    // "[yaml]": {
+    //     "editor.insertSpaces": true,
+    //     "editor.tabSize": 4,
+    //     "editor.autoIndent": "none",
+    //     "editor.quickSuggestions": {
+    //         "other": true,
+    //         "comments": false,
+    //         "strings": true
+    //     },
+    //     "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // },
     "window.zoomLevel": 2,
     "databricks.clusters.onlyShowAccessibleClusters": true,
     "python.analysis.extraPaths": [
@@ -141,5 +139,30 @@
     "workbench.editor.restoreViewState": false,
     "terminal.integrated.persistentSessionScrollback": 100000,
     "workbench.localHistory.enabled": false,
-    "editor.experimental.preferTreeSitter.regex": true
+    "editor.experimental.preferTreeSitter.regex": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "files.autoSave": "onFocusChange",
+    "notebook.lineNumbers": "on",
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    }
 }

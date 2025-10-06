@@ -1,1 +1,9 @@
 --ignore-directory=.venv
+--ignore-directory=.mypy_cache
+
+# always be color even if piped to another program
+--color
+
+# pager pipes all output to whatever cmd you specify
+# -R isn't working
+# --pager='less -R'

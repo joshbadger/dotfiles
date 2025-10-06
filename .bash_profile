@@ -1,7 +1,7 @@
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 # export HOMEBREW_NO_AUTO_UPDATE=1
 
-export PATH=/usr/local/opt/openssl@1.1/bin:$PATH:$PYTHONPATH:$M2_HOME/bin/:$GOPATH/bin:$GOROOT/bin:$HOME
+export PATH=/usr/local/opt/openssl@1.1/bin:$PATH:$PYTHONPATH:/usr/local/bin:/usr/bin:$HOME
 
  # Set PATH, MANPATH, etc., for Homebrew.
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -171,7 +171,7 @@ alias clear='clear && __prompt_to_bottom_line'
     export GRANTED_ALIAS_CONFIGURED="true"
 
     # Local Runner Start
-    alias lrs="./mwaa-local-env start sso"
+    alias lrs="GRANTED_ALIAS_CONFIGURED=true ./mwaa-local-env start sso"
 
 
 # Aliases
@@ -187,20 +187,23 @@ alias clear='clear && __prompt_to_bottom_line'
     alias sourcerc='source ~/.bash_profile'
     alias vimrc='vim ~/.vimrc'
     alias funcs='vim ~/.bash_functions'
+    alias ackrc='vim ~/.ackrc'
 
     # docker
     alias dc='docker-compose'
 
     #  git
+    alias asdf='git checkout -b ${!$}'
     alias gitv='git log | head -1 | cut -d" " -f2 | cut -c -7'
     alias gitdiff='git diff --ws-error-highlight=new,old'
     alias gdm='git branch | grep \* | cut -d " " -f2 | xargs -I{} sh -cv "git checkout master; git branch -D {}; git push origin :{}"'
     alias gpm='git pull origin master:master'
     alias fff='git push -u origin HEAD'
     alias gds='git diff --staged'
-    alias gd='git diff'
+    alias gd='git diff -w'
     alias gs='git status'
     alias gc='git checkout'
+    alias gcb='git checkout -b'
     alias gau='git add -u'
     alias ga='git add'
     alias gcm='git commit -m'
@@ -243,8 +246,8 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # poetry 
 # 1password
-export POETRY_HTTP_BASIC_IBOTTA_PYPI_USERNAME=josh.badger
-export POETRY_HTTP_BASIC_IBOTTA_PYPI_PASSWORD=$(op item get tthr7u535u7ob6jq4vouqh2u6a --reveal --fields token)
+export POETRY_HTTP_BASIC_ARTIFACTORY_USERNAME=josh.badger
+export POETRY_HTTP_BASIC_ARTIFACTORY_PASSWORD=$(op item get tthr7u535u7ob6jq4vouqh2u6a --reveal --fields token)
 
 # bitwarden
 #BW_JFROG_ITEM_ID=5e7d5baf-defa-4cf0-99ba-b266015da5c1

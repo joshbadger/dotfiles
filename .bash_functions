@@ -149,5 +149,33 @@ function rebuild {
     version=${PWD##*/}
     cd ..
     source build.sh $version
-    ./mwaa-local-env start sso
+    GRANTED_ALIAS_CONFIGURED="true" ./mwaa-local-env start sso
+}
+
+
+
+# Poll the frontmost app and log changes to ~/Desktop/focus-polled.log
+start_focus_log() {
+  nohup bash -c '
+    prev=""
+    while true; do
+      # ask macOS which app is frontmost
+      now=$(osascript -e "tell application \"System Events\" to get name of (process 1 whose frontmost is true)")
+      if [ "$now" != "$prev" ]; then
+        # timestamp + app name
+        date "+%Y-%m-%d %H:%M:%S" >> ~/Desktop/focus-polled.log
+        echo "$now"      >> ~/Desktop/focus-polled.log
+        prev="$now"
+      fi
+      sleep 0.5
+    done
+  ' >> ~/Desktop/focus-polled.log 2>&1 &
+  disown
+  echo "Focus logger started (logs → ~/Desktop/focus-polled.log)"
+}
+
+# Optional helper to kill the logger
+stop_focus_log() {
+  pkill -f 'osascript -e tell application "System Events"'
+  echo "Focus logger stopped."
 }

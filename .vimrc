@@ -36,8 +36,9 @@ set path+=**                " recurse
     call vundle#begin()
         Plugin 'VundleVim/Vundle.vim'
         Plugin 'airblade/vim-gitgutter'                         " show per line git status
-        Plugin 'andviro/flake8-vim'                             " linter
+        " Plugin 'andviro/flake8-vim'                             " linter
         Plugin 'altercation/vim-colors-solarized'
+        Plugin 'petobens/poet-v'                               " auto resolve poetry python environment
         " Plugin 'davidhalter/jedi'                               " LSP server for linting, etc
         " Plugin 'dense-analysis/ale'                             " async linter
         " Plugin 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }   " for Golang development
