@@ -10,7 +10,8 @@ cask "boom"
 cask "insomnia"
 cask "iterm2"
 cask "menumeters"
-cask "spectacle"
+cask "rectangle"
 cask "spotify"
 cask "visual-studio-code"
-cask "tomatobar"
+cask "tomatobar" # pomodoro timer
+cask "keymapp"  # for ZSA Moonlander keyboard

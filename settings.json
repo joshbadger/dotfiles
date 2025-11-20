@@ -56,35 +56,35 @@
     "--ignore=E501,E402,F403,E131,W503"
     ],
 
-    "yaml.customTags": [
-        "!And",
-        "!And sequence",
-        "!If",
-        "!If sequence",
-        "!Not",
-        "!Not sequence",
-        "!Equals",
-        "!Equals sequence",
-        "!Or",
-        "!Or sequence",
-        "!FindInMap",
-        "!FindInMap sequence",
-        "!Base64",
-        "!Join",
-        "!Join sequence",
-        "!Cidr",
-        "!Ref",
-        "!Sub",
-        "!Sub sequence",
-        "!GetAtt",
-        "!GetAZs",
-        "!ImportValue",
-        "!ImportValue sequence",
-        "!Select",
-        "!Select sequence",
-        "!Split",
-        "!Split sequence"
-    ],
+    // "yaml.customTags": [
+    //     "!And",
+    //     "!And sequence",
+    //     "!If",
+    //     "!If sequence",
+    //     "!Not",
+    //     "!Not sequence",
+    //     "!Equals",
+    //     "!Equals sequence",
+    //     "!Or",
+    //     "!Or sequence",
+    //     "!FindInMap",
+    //     "!FindInMap sequence",
+    //     "!Base64",
+    //     "!Join",
+    //     "!Join sequence",
+    //     "!Cidr",
+    //     "!Ref",
+    //     "!Sub",
+    //     "!Sub sequence",
+    //     "!GetAtt",
+    //     "!GetAZs",
+    //     "!ImportValue",
+    //     "!ImportValue sequence",
+    //     "!Select",
+    //     "!Select sequence",
+    //     "!Split",
+    //     "!Split sequence"
+    // ],
     // "yaml.validate": false,
     "cfnLint.path": "cfn-lint",
     "workbench.startupEditor": "none",
@@ -141,28 +141,37 @@
     "workbench.localHistory.enabled": false,
     "editor.experimental.preferTreeSitter.regex": true,
     "python.analysis.typeCheckingMode": "basic",
-    "[yaml]": {
-        "editor.defaultFormatter": "redhat.vscode-yaml"
-    },
+    // "[yaml]": {
+    //     "editor.defaultFormatter": "redhat.vscode-yaml"
+    // },
     "github.copilot.nextEditSuggestions.enabled": true,
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "files.autoSave": "onFocusChange",
     "notebook.lineNumbers": "on",
-    "[dockercompose]": {
-        "editor.insertSpaces": true,
-        "editor.tabSize": 2,
-        "editor.autoIndent": "advanced",
-        "editor.defaultFormatter": "redhat.vscode-yaml"
-    },
-    "[github-actions-workflow]": {
-        "editor.defaultFormatter": "redhat.vscode-yaml"
-    },
+    // "[dockercompose]": {
+    //     "editor.insertSpaces": true,
+    //     "editor.tabSize": 2,
+    //     "editor.autoIndent": "advanced",
+    //     "editor.defaultFormatter": "redhat.vscode-yaml"
+    // },
+    // "[github-actions-workflow]": {
+    //     "editor.defaultFormatter": "redhat.vscode-yaml"
+    // },
     "github.copilot.enable": {
         "*": false,
         "plaintext": false,
         "markdown": false,
         "scminput": false
+    },
+    "chat.tools.terminal.autoApprove": {
+        "poetry run python -c \"import databricks; print(dir(databricks))\"": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "poetry": true,
+        "import": true,
+        "print([name": true
     }
 }

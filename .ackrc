@@ -1,5 +1,8 @@
 --ignore-directory=.venv
 --ignore-directory=.mypy_cache
+--ignore-directory=.databricks
+--ignore-file=is:poetry.lock
+
 
 # always be color even if piped to another program
 --color
