@@ -1,5 +1,4 @@
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
-# export HOMEBREW_NO_AUTO_UPDATE=1
 
 export PATH=/usr/local/opt/openssl@1.1/bin:$PATH:$PYTHONPATH:/usr/local/bin:/usr/bin:$HOME
 
@@ -42,32 +41,11 @@ eval "$(pyenv init -)"
       fi
     fi
 
-    # set -o vi
-
-# kube
-    #source ~/bin/kubectl-completion.sh
-
 # git
     source ~/bin/git-completion.sh
     source ~/bin/git-prompt.sh
 
-# old prompt
-    # old prompt for reference
-    # export PS1='${end} \u@ibotta \W$(__git_ps1 " (\[\e[94m\]%s\[\e[39m\])")\$ '
-    #
-    # export GIT_PS1_SHOWDIRTYSTATE=1
-    # export GIT_PS1_SHOWUNTRACKEDFILES=1
-
-    # # end forces prompt to start at the bottom
-    # end=$(tput cup 9999 0)
-    # blue='\[\e[94m\]'
-    # red='\[\e[39m\]'
-    # export PS1='${end} jb@ibotta $(basename $(dirname $PWD))/$(basename $PWD) $(__git_ps1)\$ '
-
-    #
- 
-# Set the prompt #
-#
+# Set the prompt
 
 # Select git info displayed, see /usr/share/git/completion/git-prompt.sh for more
 export GIT_PS1_SHOWDIRTYSTATE=1           # '*'=unstaged, '+'=staged
@@ -141,9 +119,6 @@ __set_bash_prompt()
     # Set PS1 from $PreGitPS1 + <git-status> + $PostGitPS1
     __git_ps1 "$PreGitPS1" "$PostGitPS1" '(%s)'
 
-    # echo '$PS1='"$PS1" # debug
-    # defaut Linux Mint 17.2 user prompt:
-    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[00m\] $(__git_ps1 "(%s)") \$ '
 }
 
 # This tells bash to reinterpret PS1 after every command, which we
@@ -163,29 +138,25 @@ alias clear='clear && __prompt_to_bottom_line'
     export AWS_DEFAULT_REGION=us-east-1
     export AWS_REGION=$AWS_DEFAULT_REGION
     alias sam="saml2aws login --skip-prompt --session-duration=43200"
-    #alias aws="saml2aws exec --exec-profile=ae -- aws"
     complete -C '/opt/homebrew/bin/aws_completer' aws # aws CLI tab completion
 
     # granted/assume
     alias assume=". assume"
     export GRANTED_ALIAS_CONFIGURED="true"
 
-    # Local Runner Start
-    alias lrs="GRANTED_ALIAS_CONFIGURED=true ./mwaa-local-env start sso"
-
 
 # Aliases
     # bash
     alias res='exec -l $SHELL'
     alias ls='ls -G'
-    # alias tf='terraform'
     alias flushcache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
-    alias spot='spotify-terminal.py -u joshuabadger'
 
+    # editor
+    alias vim="nvim"
     # rc related
     alias rc='vim ~/.bash_profile'
     alias sourcerc='source ~/.bash_profile'
-    alias vimrc='vim ~/.vimrc'
+    alias vimrc='vim ~/.config/nvim/'
     alias funcs='vim ~/.bash_functions'
     alias ackrc='vim ~/.ackrc'
 
@@ -219,17 +190,12 @@ alias clear='clear && __prompt_to_bottom_line'
 
     # kube
     alias k='kubectl'
-    # alias kw='${HOME}/bin/kubectl-config.sh'
-    # alias kc='kubectl config current-context'
-
-    alias remdeps="pip freeze | grep -v -f requirements.txt - | grep -v '^#' | grep -v '^-e ' | xargs pip uninstall -y"
+    alias kc='kubectl config current-context'
 
     alias db="databricks"
     alias dbb="databricks bundle"
     # this needs to be after aliases
     source ~/.bash_functions
-
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #Auto-Complete function for AWSume
 _awsume() {
@@ -248,17 +214,6 @@ export PATH="$PATH:$HOME/.local/bin/"
 export PYTHONPATH="$PYTHONPATH:$HOME/src/*"
 export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 export BASH_SILENCE_DEPRECATION_WARNING=1
-
-# poetry / 1password — run `jfrog-auth` to populate these
-# export POETRY_HTTP_BASIC_ARTIFACTORY_USERNAME=josh.badger
-# export POETRY_HTTP_BASIC_ARTIFACTORY_PASSWORD=$(op item get tthr7u535u7ob6jq4vouqh2u6a --reveal --fields token)
-
-# bitwarden
-#BW_JFROG_ITEM_ID=5e7d5baf-defa-4cf0-99ba-b266015da5c1
-#export BW_SESSION=$(bw unlock --raw)
-#export POETRY_HTTP_BASIC_IBOTTA_PYPI_USERNAME=josh.badger
-#export POETRY_HTTP_BASIC_IBOTTA_PYPI_PASSWORD=$(bw get password $BW_JFROG_ITEM_ID)
-#bw lock
 
 export PKG_CONFIG_PATH="$(brew --prefix)/opt/mysql-client/lib/pkgconfig"
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"

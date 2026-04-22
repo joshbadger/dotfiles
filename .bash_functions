@@ -68,88 +68,8 @@ repo-pattern    Any unique identifier for a project name.
     fi
 }
 
-aws-describe() {
-    if [ $# -ne 1 ]; then
-        echo "Usage: aws-describe <env>"
-    else
-        command aws ec2 describe-instances --output json --region us-east-1 --filters "'Name=tag:env,Values=${1}'" 'Name=tag:mode,Values=web' --query 'Reservations[*].Instances[*].PublicDnsName'
-    fi
-}
-
-
-# Remove any entries from SSH known_hosts file
-# that match the specified string.
-sshrm () {
-  node=$1
-  echo "Removing $node from SSH known hosts"
-  sed -i '.bak' -e "/^$node/d" ~/.ssh/known_hosts
-}
-
 function diff {
     colordiff -u "$@" | less -RF
-}
-
-
-aws-login(){
-	saml2aws login --session-duration 43200 --username jbadger --duo-mfa-option='Duo Push' --skip-prompt --force --role='arn:aws:iam::206670668379:role/enterprise-scheduling-engineer'
-	# open 'https://kyruus.okta.com/home/amazon_aws/0oac4wn1eFUJ8RivP356/272?fromHome=true'
-    # osascript -e "tell application \"/Applications/Tunnelblick.app\"" -e "connect \"Kyruus VPC\"" -e "end tell"
-}
-
-function kssh () {
-    INSTANCE_ID=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=$1" --query 'Reservations[0].Instances[0].InstanceId' --output text)
-    aws ssm start-session --target $INSTANCE_ID
-}
-
-function svtest() {
-    if [ $# = 1 ]; then
-       TARGET=$1 
-    fi
-    command nosetests "$TARGET"/tests --verbose --with-coverage --cover-branches --cover-package="$TARGET" --cover-erase --logging-level=INFO
-}
-
-function asm() {
-    if [ -z "$1" ]; then
-            echo "Please provide an environment as an argument"
-    elif [ "$1" = "dev" ]; then
-            otp=$(op item get "DEV janus AWS" --otp)
-            awsume dev --mfa-token=$otp ${@:2}
-    elif [ "$1" = "app" ]; then
-            otp=$(op item get "APP janus AWS" --otp)
-            awsume app --mfa-token=$otp ${@:2}
-    else
-            echo "Unknown Argument: please provide 'app' or 'dev'"
-    fi
-}
-
-function chaf() {
-    if [ -z "$1" ]; then
-            echo "Please provide an environment as an argument"
-            echo "  app"
-            echo "  dev"
-            exit
-    elif [ "$1" = "dev" ] || [ "$1" = "app" ]; then
-            awsume $1; ./airflow-change-env.sh;
-    else
-            echo "Unknown Argument: please provide 'app' or 'dev'"
-            exit
-    fi
-}
-
-function mwaa() {
-    cd data-engineering-mwaa-shared-resources/aws-mwaa-local-runner/$1
-}
-
-# run this from the version directory (i.e. .../2.6.3
-function rebuild {
-    if [ "$1" == "-d" ]; then
-        colima delete
-    fi
-    
-    version=${PWD##*/}
-    cd ..
-    source build.sh $version
-    GRANTED_ALIAS_CONFIGURED="true" ./mwaa-local-env start sso
 }
 
 
