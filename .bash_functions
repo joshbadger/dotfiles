@@ -154,6 +154,16 @@ function rebuild {
 
 
 
+# Load credentials from 1Password into the environment.
+# Call this manually when you need credentials (avoids fingerprint prompt on every shell load).
+function jfrog-auth() {
+    echo "Fetching credentials from 1Password..."
+    export POETRY_HTTP_BASIC_ARTIFACTORY_USERNAME=josh.badger
+    export POETRY_HTTP_BASIC_ARTIFACTORY_PASSWORD=$(op item get tthr7u535u7ob6jq4vouqh2u6a --reveal --fields token)
+    echo "Done. Artifactory credentials loaded."
+}
+
+
 # Poll the frontmost app and log changes to ~/Desktop/focus-polled.log
 start_focus_log() {
   nohup bash -c '

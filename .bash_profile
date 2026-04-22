@@ -210,18 +210,22 @@ alias clear='clear && __prompt_to_bottom_line'
     alias gcm='git commit -m'
     alias gp='git pull'
     alias ggig='vim ~/.gitignore'
+    # for a file needing merged, take both (Git Take Both)
+    alias gtb="sed -i '' '/^<<<<<<</d;/^=======/d;/^>>>>>>>/d'"
+
 
     alias pc='pre-commit run'
 
 
     # kube
-    # alias k='kubectl'
+    alias k='kubectl'
     # alias kw='${HOME}/bin/kubectl-config.sh'
     # alias kc='kubectl config current-context'
 
     alias remdeps="pip freeze | grep -v -f requirements.txt - | grep -v '^#' | grep -v '^-e ' | xargs pip uninstall -y"
 
     alias db="databricks"
+    alias dbb="databricks bundle"
     # this needs to be after aliases
     source ~/.bash_functions
 
@@ -245,10 +249,9 @@ export PYTHONPATH="$PYTHONPATH:$HOME/src/*"
 export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-# poetry 
-# 1password
-export POETRY_HTTP_BASIC_ARTIFACTORY_USERNAME=josh.badger
-export POETRY_HTTP_BASIC_ARTIFACTORY_PASSWORD=$(op item get tthr7u535u7ob6jq4vouqh2u6a --reveal --fields token)
+# poetry / 1password — run `jfrog-auth` to populate these
+# export POETRY_HTTP_BASIC_ARTIFACTORY_USERNAME=josh.badger
+# export POETRY_HTTP_BASIC_ARTIFACTORY_PASSWORD=$(op item get tthr7u535u7ob6jq4vouqh2u6a --reveal --fields token)
 
 # bitwarden
 #BW_JFROG_ITEM_ID=5e7d5baf-defa-4cf0-99ba-b266015da5c1
@@ -265,3 +268,7 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
 
 
+
+. "$HOME/.local/bin/env"
+
+export SLACK_BOT_TOKEN=$(security find-generic-password -a "slack" -s "SLACK_BOT_TOKEN" -w)
